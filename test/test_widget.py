@@ -25,7 +25,9 @@ import pytest
 
 from libqtile.config import Screen
 from libqtile.bar import Bar
-from libqtile.widget import TextBox, ThermalSensor
+from libqtile.widget import TextBox
+from libqtile.widget import ThermalSensor
+from libqtile.widget import HDThermalSensor
 
 from .conftest import BareConfig
 
@@ -76,3 +78,13 @@ def test_thermalsensor_regex_compatibility():
     assert sensors_detected["Core 2"] == ("58.0", "°C")
     assert sensors_detected["Core 3"] == ("61.0", "°C")
     assert not ("Adapter" in sensors_detected.keys())
+
+
+def test_hdthermalsensor_regex_compatibility():
+    sensors = HDThermalSensor()
+    test_sensors_output = """
+    /dev/sda: WDC WD25EZRS-00J99B0: 45°C
+    """
+    sensors_detected = sensors._format_sensors_output(test_sensors_output)
+    assert sensors_detected["/dev/sda"] == ("45", "°C")
+    assert not ("WDC WD25EZRS-00J99B0" in sensors_detected.keys())
