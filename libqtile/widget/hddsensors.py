@@ -43,7 +43,7 @@ class HDThermalSensor(base.InLoopPollText):
     """
     orientations = base.ORIENTATION_HORIZONTAL
     defaults = [
-        ('drive_model', '/dev/sda',
+        ('drive_name', '/dev/sda',
             'Full path to the drive. For example: "/dev/sda"'),
         ('threshold', 60,
             'If the current temperature value is above, '
