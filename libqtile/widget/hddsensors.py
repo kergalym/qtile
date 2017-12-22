@@ -25,10 +25,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import re
+from os.path import isfile
 from six import PY2
 from . import base
 from ..utils import UnixCommandNotFound, catch_exception_and_warn
+import re
 
 
 class HDThermalSensor(base.InLoopPollText):
@@ -79,12 +80,14 @@ class HDThermalSensor(base.InLoopPollText):
         """calls the `hddtemp` command with `/dev/sda` arg, so
         the output should be read.
         """
-        command = ["/usr/sbin/hddtemp"]
-        if command and self.drive_name is not None:
-            command.append(str(self.drive_name))
-            sensors_out = self.call_process(command)
+        if isfile('/usr/sbin/hddtemp'):
+            command = ["/usr/sbin/hddtemp"]
+            if command and self.drive_name is not None:
+                command.append(str(self.drive_name))
+                sensors_out = self.call_process(command)
+                return self._format_sensors_output(sensors_out)
         # If we don't have any hard drive just return test output
-        elif command is None:
+        else:
             sensors_out = '/dev/sda: WDC WD10EZEX-00RKKA0:  45°C'
         return self._format_sensors_output(sensors_out)
 
