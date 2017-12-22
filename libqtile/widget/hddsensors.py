@@ -80,7 +80,7 @@ class HDThermalSensor(base.InLoopPollText):
         """calls the `hddtemp` command with `/dev/sda` arg, so
         the output should be read.
         """
-        if isfile('/usr/sbin/hddtemp'):
+        if isfile(self.drive_name):
             command = ["/usr/sbin/hddtemp"]
             if command and self.drive_name is not None:
                 command.append(str(self.drive_name))
