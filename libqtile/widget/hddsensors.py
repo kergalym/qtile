@@ -82,7 +82,10 @@ class HDThermalSensor(base.InLoopPollText):
         command = ["/usr/sbin/hddtemp"]
         if command and self.drive_name is not None:
             command.append(str(self.drive_name))
-        sensors_out = self.call_process(command)
+            sensors_out = self.call_process(command)
+        # If we don't have any hard drive just return test output
+        elif command is None:
+            sensors_out = '/dev/sda: WDC WD10EZEX-00RKKA0:  45°C'
         return self._format_sensors_output(sensors_out)
 
     def _format_sensors_output(self, sensors_out):
@@ -104,7 +107,6 @@ class HDThermalSensor(base.InLoopPollText):
             return False
         text = ""
         if self.drive_name is not None:
-            # text = self.drive_name + ": "
             text += "".join(temp_values.get(self.drive_name, ['N/A']))
         temp_value = float(temp_values.get(self.drive_name, [0])[0])
         if temp_value > self.threshold:
