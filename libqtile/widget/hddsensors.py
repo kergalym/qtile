@@ -89,7 +89,7 @@ class HDThermalSensor(base.InLoopPollText):
         # If we don't have any hard drive just return test output
         else:
             sensors_out = '/dev/sda: WDC WD10EZEX-00RKKA0:  45°C'
-        return self._format_sensors_output(sensors_out)
+            return self._format_sensors_output(sensors_out)
 
     def _format_sensors_output(self, sensors_out):
         """formats output of `hddtemp` command into a dict of
