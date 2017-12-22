@@ -65,5 +65,5 @@ def test_hdthermalsensor_regex_compatibility():
     /dev/sda: WDC WD25EZRS-00J99B0: 45°C
     """
     sensors_detected = sensors._format_sensors_output(test_sensors_output)
-    assert sensors_detected["/dev/sda"] == ("45", "°C")
+    assert sensors_detected["/dev/sda"] == (" 45", "°C")
     assert not ("WDC WD25EZRS-00J99B0" in sensors_detected.keys())
