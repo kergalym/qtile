@@ -82,8 +82,6 @@ class HDThermalSensor(base.InLoopPollText):
         """
         sensors_out = ''
         if exists(self.drive_name) is not True:
-            print(isfile(self.drive_name))
-            print(self.drive_name)
             # If we don't have any hard drive just return test output
             sensors_out = '/dev/sda: WDC WD10EZEX-00RKKA0:  45°C'
         else:
