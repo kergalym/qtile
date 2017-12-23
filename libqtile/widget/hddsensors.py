@@ -98,8 +98,7 @@ class HDThermalSensor(base.InLoopPollText):
         """
         temperature_values = {}
         print(self.sensors_temp.findall(sensors_out))
-        for name, model, temp, symbol in self.sensors_temp.findall(
-             sensors_out):
+        for name, model, temp, symbol in self.sensors_temp.findall(sensors_out):
             name = name.strip()
             temperature_values[name] = temp, symbol
         return temperature_values
